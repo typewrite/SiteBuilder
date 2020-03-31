@@ -1,0 +1,35 @@
+{
+    "main": "WebPage",
+    "Header": {
+        "Logo": {
+            "src": "${logoUrl}",
+            "alt": "Logo"
+        },
+        "Menu": {
+            "menuItems": [
+                {
+                    "text": "Menu Item 1",
+                    "link": "/somelink"
+                },
+                {
+                    "text": "Menu Item 2",
+                    "link": null,
+                    "subMenu": [
+                        {
+                            "text": "Sub Menu Item 1",
+                            "link": "/somelink1"
+                        },
+                        {
+                            "text": "Sub Menu Item 2",
+                            "link": "/somelink2"
+                        }
+                    ]
+                },
+                {
+                    "text": "Menu Item 3",
+                    "link": "/somelink3"
+                }
+            ]
+        }
+    }
+}
