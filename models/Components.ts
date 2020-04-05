@@ -15,6 +15,7 @@ export interface ImageComponent extends WebComponent<ImageComponetProps> {}
 
 export interface Logo extends BaseProps {
     text: string;
+    href?: string;
     src?: string;
 }
 

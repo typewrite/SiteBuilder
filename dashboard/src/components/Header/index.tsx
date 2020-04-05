@@ -4,7 +4,7 @@ import { HeaderProps } from "../../../../models/Components";
 
 const Header: React.FC<HeaderProps> = ({logo, menuItems, otherProps}) => {
     return (
-        <header className="d-flex" {...otherProps}>
+        <header {...otherProps}>
             <Navbar logo={logo} menuItems={menuItems} />
         </header>
     )

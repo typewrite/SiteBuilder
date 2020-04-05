@@ -1,15 +1,20 @@
 import React, {useState} from "react";
-import { MenuProps, HeaderProps } from "../../../../models/Components";
+import { HeaderProps } from "../../../../models/Components";
 import { MenuItems } from "./MenuItems";
+import { classnames } from "../../utils/classnames";
 
-
+enum CollapseStates {
+    collapse="collapse",
+    collapsing="collapsing",
+    show="collapse show",
+}
 
 const Navbar: React.FC<HeaderProps> = ({logo, menuItems}) => {
-    const [collapsed, setCollapse] = useState(false);
+    const [collapseState, setCollapse] = useState(CollapseStates.collapse);
     const { src, text, otherProps } = logo;
     return (
         <nav className="navbar navbar-dark bg-dark">
-            <a className="navbar-brand" href="#">
+            <a className="navbar-brand" href={logo.href}>
                 {!!logo.src ? <img src={src} alt={text} {...otherProps} /> : logo.text }
             </a>
             <button 
@@ -20,11 +25,20 @@ const Navbar: React.FC<HeaderProps> = ({logo, menuItems}) => {
                 aria-controls="navbarText" 
                 aria-expanded="false" 
                 aria-label="Toggle navigation"
-                onClick={() => setCollapse(!collapsed)}
+                onClick={() => {
+                    if (collapseState === CollapseStates.collapse) {
+                        setCollapse(CollapseStates.collapsing);
+                        setTimeout(() => {
+                            setCollapse(CollapseStates.show);
+                        }, 2);
+                    } else {
+                        setCollapse(CollapseStates.collapse);
+                    }
+                }}
             >
                 <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse">
+            <div className={classnames(["navbar-collapse", collapseState])}>
                 <MenuItems menuItems={menuItems} />
             </div>
         </nav>

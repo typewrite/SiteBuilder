@@ -1,5 +1,6 @@
 import React, { ReactChildren } from "react";
 import { string } from "prop-types";
+import { classnames } from "../../utils/classnames";
 
 enum Breakpoints {
     xs="xs",
@@ -9,33 +10,40 @@ enum Breakpoints {
     xl="xl"
 }
 
-type BreakpointsType = keyof typeof Breakpoints;
+type Breakpoint = keyof typeof Breakpoints;
 
 type ColumnBreakpointSpan = {
-    [key in BreakpointsType]: React.ReactText;
+    [key in Breakpoint]: React.ReactText;
 };
 
 interface Column {
-    columnSpan: ColumnBreakpointSpan;
+    cols: ColumnBreakpointSpan;
     height: React.ReactText;
 }
 
-interface ResponsiveColumn {
-    width: [];
-    height: [];
-}
-
 interface ColumnProps {
-    height: number | string;
     columns: Column;
     children: ReactChildren;
 }
 
 const Column: React.FC<ColumnProps> = ({ columns, children }) => {
-    
+    const cssClasses = Object.keys(columns.cols).map((breakpoint: string) => {
+        const bp = breakpoint as Breakpoint;
+        let classStr = 'col';
+        classStr += bp === Breakpoints.xs ? `-${columns.cols[bp]}` : `-${bp}-${columns.cols[bp]}`;
+        return classStr;
+    }).join(" ").trim();
+
+    const customStyles = !!columns.height ? {height: columns.height} : {};
+
     return (
-        <div>
+        <div 
+            className={cssClasses}
+            style={customStyles}
+        >
             {children}
         </div>
     )
 }
+
+export default Column;
